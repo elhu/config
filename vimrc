@@ -59,7 +59,7 @@ set backspace=indent,eol,start   " allow backspacing over everything in insert m
 set nowrap                       " don't wrap lines longer than the screen
 set nostartofline                " don't jump to first character when paging
 set whichwrap=b,s,h,l,<,>,[,]    " move freely between files
-set pastetoggle=<C-p>            " pasting from outside vim. It turns off auto stuff. You can tell you are in paste mode when the ruler is not visible
+set pastetoggle=<F8>             " pasting from outside vim. It turns off auto stuff. You can tell you are in paste mode when the ruler is not visible
 set showtabline=2                " Always show tabline
 set fdm=marker
 " }}}
