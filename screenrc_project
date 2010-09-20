@@ -1,0 +1,8 @@
+source $HOME/.screenrc
+
+chdir /home/adrian/work/project
+screen -t build
+
+chdir /home/adrian/work/project/public
+screen -t public
+
