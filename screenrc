@@ -1,0 +1,32 @@
+# http://linux.dsplabs.com.au/files/p13-screen/.screenrc
+startup_message off
+
+defscrollback 4096
+
+# go to home dir
+chdir
+
+# automatically detach on hangup.
+autodetach on
+
+# default enconding for new windows is utf8
+defutf8 on
+#nonblock on
+
+# look and feel
+# caption always "%{= bb}%{+b w}%n %h %=%t %c"
+# caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= @%H - %LD %d %LM - %c" ***
+#hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+shelltitle "$ |zsh"
+hardstatus alwayslastline
+hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+
+#bindkey -t !sb eval "scrollback 0" "scrollback 1000"
+#bindkey -t !ht stuff "sudo apache2ctl configtest && apache2ctl graceful^M"
+#bind 'R' screen ssh s1554463@sunfire16
+#bind 'R' screen -t sunfire16 ssh s1554463@sunfire16
+#bind 'q' quit
+
+#screen top
+#screen -t mail 8 mutt
+#screen -t daemon 9 tail -f /var/log/daemon.log
