@@ -21,6 +21,8 @@ nnoremap <C-y> 5<C-y>
 " Press Ctrl+h to toggle highlighting on/off.
 noremap <C-h> :set hls!<CR>
 
+noremap <F5> :CommandTFlush<CR>
+
 " Fixes the following *feature*:
 "     If you do not type anything on the new line except <BS> or CTRL-D and then
 "     type <Esc> or <CR>, the indent is deleted again
