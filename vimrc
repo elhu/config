@@ -2,6 +2,9 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+let mapleader = ","
+let g:mapleader = ","
+
 " Make shift-insert work like in Xterm.
 map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
@@ -21,6 +24,7 @@ nnoremap <C-y> 5<C-y>
 " Press Ctrl+h to toggle highlighting on/off.
 noremap <C-h> :set hls!<CR>
 
+noremap <Leader>t :CommandT<CR>
 noremap <F5> :CommandTFlush<CR>
 
 " Fixes the following *feature*:
@@ -119,10 +123,8 @@ set shiftwidth=4                 " numbers of spaces to (auto)indent
 "set list                         " Shows TABs, EOLs
 "set lcs+=tab:>-,eol:·            " Which characters to show for tabs and eols
 
-let mapleader = ","
-let g:mapleader = ","
-
-colorscheme evening
+" http://vimcolorschemetest.googlecode.com/svn/colors/anotherdark.vim
+colorscheme anotherdark
 
 syntax on
 
