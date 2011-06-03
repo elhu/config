@@ -124,6 +124,7 @@ set shiftwidth=4                 " numbers of spaces to (auto)indent
 "set lcs+=tab:>-,eol:·            " Which characters to show for tabs and eols
 
 " http://vimcolorschemetest.googlecode.com/svn/colors/anotherdark.vim
+" http://vimcolorschemetest.googlecode.com/svn/colors/inkpot.vim
 colorscheme anotherdark
 
 syntax on
