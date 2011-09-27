@@ -1,6 +1,8 @@
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
-set nocompatible
+if &compatible
+    set nocompatible
+end
 
 let mapleader = ","
 let g:mapleader = ","
@@ -12,6 +14,30 @@ map! <S-Insert> <MiddleMouse>
 " Hold down the shift key to scroll left and right through the tabs with 'h' and 'l'.
 map <S-h> gT
 map <S-l> gt
+
+nmap ,w :x<CR>
+nmap ,q :q!<CR>
+
+" USE gi - goes back to last insert
+" '. - goes to the last modification
+" CTRL+E & Y (ins mod) - inserts chars from above and below line
+" CTRL+T & D - indent and dedent in ins mod
+" :!sort, :!grep, :!
+" http://www.vim.org/scripts/script.php?script_id=90
+" http://choorucode.wordpress.com/2010/11/28/vim-ruler-and-default-ruler-format/
+" rails.vim
+" gist.vim
+" space.vim
+" https://github.com/tpope/vim-fugitive
+" example use of pathogen
+" http://vimcasts.org/
+" ; to repeat fX or FX
+" sessions
+" "*p will paste from the different register
+" :r!cat
+" :map <C-F> /\V
+" :help text-objects 
+" http://www.vimgolf.com/
 
 " So that 'a will jump to the line *and* column.
 nnoremap ' `
@@ -119,13 +145,24 @@ set tabstop=4                    " numbers of spaces of tab character
 set shiftwidth=4                 " numbers of spaces to (auto)indent
 " }}}
 
+" Specky
+let g:speckyBannerKey        = "gcb"
+let g:speckyQuoteSwitcherKey = "gc'"
+let g:speckyRunRdocKey       = "gcr"
+let g:speckySpecSwitcherKey  = "gcx"
+let g:speckyRunSpecKey       = "gcs"
+let g:speckyRunRdocCmd       = "fri -L -f plain"
+let g:speckyWindowType       = 2
+let g:speckyRunSpecCmd       = 'bin/rspec --format nested'
+
 "set autochdir                    " current directory is always matching the content of the active window - useful without command-t plugin
 "set list                         " Shows TABs, EOLs
 "set lcs+=tab:>-,eol:·            " Which characters to show for tabs and eols
 
 " http://vimcolorschemetest.googlecode.com/svn/colors/anotherdark.vim
 " http://vimcolorschemetest.googlecode.com/svn/colors/inkpot.vim
-colorscheme anotherdark
+" colorscheme evening
+" colorscheme inkpot
 
 syntax on
 

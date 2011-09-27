@@ -1,0 +1,21 @@
+#!/usr/bin/ruby
+
+puts "Choose a screen session:\n"
+
+screens = Dir.entries("/home/adrian/screens/")
+screens.slice!(0,2)
+
+i = 0
+screens.each do |dir|
+  puts("\t[#{i = i.next}] #{dir}\n") unless (dir == "." or dir == "..")
+end
+
+choice = ""
+loop do
+  puts "Type a number or q to exit: "
+  choice = gets.chomp
+  break if (choice == "q" or choice.to_i.between?(1, i))
+end
+
+exec("screen -c /home/adrian/screens/#{screens[choice.to_i-1]}") unless choice == "q"
+
