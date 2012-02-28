@@ -4,8 +4,58 @@ if &compatible
     set nocompatible
 end
 
-let mapleader = ","
-let g:mapleader = ","
+set encoding=utf-8
+
+let mapleader=","
+let g:mapleader=","
+
+" Reformatting a paragraph.
+map Q gq
+
+" Insert < => > with Ctrl+l.
+imap <c-l> <space>=><space>
+
+" Use <,,> when in normal mode to write the current buffer.
+nnoremap <leader><leader> <c-^>
+
+" %% will be the folder of the currently opened buffer.
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+map <leader>e :edit %%
+map <leader>gf :CommandT %%<cr>
+
+" Rails shortcuts. {{{
+map <leader>gv :CommandT app/views<cr>
+map <leader>gc :CommandT app/controllers<cr>
+map <leader>gm :CommandT app/models<cr>
+map <leader>gh :CommandT app/helpers<cr>
+map <leader>gl :CommandT lib<cr>
+map <leader>gp :CommandT public<cr>
+map <leader>gs :CommandT public/stylesheets<cr>
+map <leader>gj :CommandT public/javascripts<cr>
+
+function! ShowRoutes()
+  " Requires 'scratch' plugin
+  :topleft 100 :split __Routes__
+  " Make sure Vim doesn't write __Routes__ as a file
+  :set buftype=nofile
+  " Delete everything
+  :normal 1GdG
+  " Put routes output in buffer
+  :0r! rake -s routes
+  " Size window to number of lines (1 plus rake output length)
+  :exec ":normal " . line("$") . _ "
+  " Move cursor to bottom
+  :normal 1GG
+  " Delete empty trailing line
+  :normal dd
+endfunction
+map <leader>gR :call ShowRoutes()<cr>
+" }}}
+
+" filter non-printable characters from the paste buffer
+" useful when pasting from some gui application
+nmap <leader>p :let @* = substitute(@*,'[^[:print:]]','','g')<cr>"*p
 
 " Make shift-insert work like in Xterm.
 map <S-Insert> <MiddleMouse>
@@ -17,6 +67,30 @@ map <S-l> gt
 
 nmap ,w :x<CR>
 nmap ,q :q!<CR>
+
+" sudo write and quit
+cmap x!! w !sudo tee %<CR><CR>:q!<CR>
+
+" set colorcolumn "- find more subtle color
+
+" :.! - execute system command and add output on the current line
+" Auto reloads the current buffer..especially useful while viewing log files and it almost serves the functionality of tail program in unix from within vim.
+" :setlocal autoread
+" set autoread " Read files when they've been changed outside of Vim.
+" == correct indentation of current line; gg=G corrects indentation for entire file
+" =a{ correct indentation of current block (also =% if u'r on the {)
+
+" In order to copy a text from Vim to your clipboard for other application to
+" use, select the text you want to copy in visual mode, and then press "+y. This
+" way, you can easily paste your text to other applications.
+
+" --- Maybe I can use this to run tests in background
+" When working on a project where the build process is slow I always build in the background
+" and pipe the output to a file called errors.err (something like make debug 2>&1 | tee errors.err).
+" This makes it possible for me to continue editing or reviewing the source code during the build process.
+" When it is ready (using pynotify on GTK to inform me that it is complete) I can look at the result in vim
+" using quickfix. Start by issuing :cf[ile] which reads the error file and jumps to the first error.
+" I personally like to use cwindow to get the build result in a separate window.
 
 " USE gi - goes back to last insert
 " '. - goes to the last modification
@@ -38,7 +112,8 @@ nmap ,q :q!<CR>
 " :map <C-F> /\V
 " :help text-objects 
 " http://www.vimgolf.com/
-
+" Diff opt
+" set diffopt=vertical
 " So that 'a will jump to the line *and* column.
 nnoremap ' `
 nnoremap ` '
@@ -108,13 +183,15 @@ set visualbell                   " instead of emitting an obnoxious noise, the w
 set ruler                        " show the cursor position all the time
 set number                       " show line numbers
 set ls=2                         " always show status line
+"set statusline+=\ %t\ \|\ len:\ \%L\ \|\ type:\ %Y\ \|\ ascii:\ \%03.3b\ \|\ hex:\ %2.2B\ \|\ line:\ \%2l
+"set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 set scrolloff=5                  " keep 4 lines below cursor when scrolling
 set showcmd                      " display incomplete commands
 set title                        " show title in console title bar
 set mousehide                    " hide the mouse pointer while typing
 set lazyredraw
 set ttyfast                      " smoother changes
-set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif  " Ignore these files when completing names and in Explorer
+set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,node_modules/**  " Ignore these files when completing names and in Explorer
 " }}}
 
 " Search {{{
@@ -137,7 +214,9 @@ set sessionoptions+=resize,blank " remember empty files and window sizes between
 " }}}
 
 " Indent {{{
-set autoindent                   " always set autoindenting on
+set nosmartindent                " smartindent automatically inserts one extra level of indentation in some cases, and works for C-like files
+set nocindent                    " is more customizable, but also more strict when it comes to syntax
+set autoindent                   " copy the indentation from the previous line, when starting a new line
 set cpo+=I                       " when moving the cursor up or down just after inserting indent for 'autoindent', do not delete the indent
 set expandtab                    " tabs are converted to spaces, use only when required
 set softtabstop=4                " this makes the backspace key treat the four spaces like a tab (so one backspace goes back a full 4 spaces)
@@ -170,7 +249,7 @@ syntax on
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
 " 'cindent' is on in C files, etc.
 " Also load indent files, to automatically do language-dependent indenting.
-" filetype plugin indent on
+filetype plugin indent on
 
 " Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
@@ -178,6 +257,8 @@ augroup vimrcEx
 	
 	" For all text files set 'textwidth' to 78 characters.
 	autocmd FileType text setlocal textwidth=78
+    autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+    "autocmd FileType html setlocal shiftwidth=2 tabstop=2 OR put any settings in ~/.vim/after/ftplugin
 	
 	" When editing a file, always jump to the last known cursor position.
 	" Don't do it when the position is invalid or when inside an event handler
