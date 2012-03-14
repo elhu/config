@@ -1,0 +1,2 @@
+# To add it: git config --global core.excludesfile ~/.gitignore_global
+.vimrc
