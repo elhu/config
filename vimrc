@@ -140,6 +140,7 @@ set sessionoptions+=resize,blank " remember empty files and window sizes between
 
 let mapleader=","
 let g:mapleader=","
+let g:CommandTMatchWindowAtTop=1
 
 " Reformatting a paragraph.
 map Q gq
