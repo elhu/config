@@ -2,7 +2,7 @@
 Pry.config.should_load_plugins = false
 Pry.plugins["doc"].activate!
 
-Pry.hooks = { :after_session => proc { puts "Pry has ended." } }
+Pry.config.hooks.add_hook(:after_session, :say_bye) { puts "Pry has ended." }
 
 Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
 
@@ -67,12 +67,6 @@ class Hash
   end
 end
 
-begin
-  require "pryrc_project.rb"
-rescue LoadError
-  p "No custom pryrc file loaded for the project"
-end
-
 if Object.const_defined?('ActiveRecord')
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
@@ -91,3 +85,10 @@ module DevHelpers
     self.any_of(*searches)
   end
 end
+
+begin
+  require "pryrc_project.rb"
+rescue LoadError
+  p "No custom pryrc file loaded for the project"
+end
+

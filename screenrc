@@ -22,6 +22,7 @@ autodetach on
 shelltitle "$ |zsh"
 hardstatus alwayslastline
 hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
 
 #bindkey -t !sb eval "scrollback 0" "scrollback 1000"
 #bindkey -t !ht stuff "sudo apache2ctl configtest && apache2ctl graceful^M"
