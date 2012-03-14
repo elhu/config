@@ -10,7 +10,9 @@ chdir
 autodetach on
 
 # default enconding for new windows is utf8
-defutf8 on
+# yeah, actually this doesn't work correctly - best to start screen with -U
+#utf8 on on
+#defutf8 on
 #nonblock on
 
 # look and feel
