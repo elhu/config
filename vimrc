@@ -52,10 +52,8 @@ set encoding=utf-8
 
 syntax on
 
-" Press Ctrl+h to toggle highlighting on/off.
-noremap <C-h> :set hls!<CR>
-
 set nomodeline " Disable reading vim configuration from files
+set history=100 " keep 100 lines of command line history
 
 "set autochdir                    " current directory is always matching the content of the active window - useful without command-t plugin
 "set list                         " Shows TABs, EOLs
@@ -69,8 +67,21 @@ set nomodeline " Disable reading vim configuration from files
 " # Command line
 set wildmenu " see all options when auto completing with <TAB>
 set wildmode=list:longest " to have the completion complete only up to the point of ambiguity
-set history=100 " keep 100 lines of command line history
+set wildmode=longest:full,full
+" Ignore these files when completing names, in Explorer and in Command-T
+set wildignore+=*~
+set wildignore+=.hg,.git,.svn                        " Version control
+set wildignore+=*.aux,*.out,*.toc                    " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.xpm " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest     " compiled object files
+set wildignore+=*.class,*.a,*.mo,*.pyc               " mode compiled object files
+set wildignore+=*.spl                                " compiled spelling word lists
+set wildignore+=*.sw?                                " Vim swap files
+set wildignore+=*.DS_Store                           " OSX bullshit
+set wildignore+=*.luac                               " Lua byte code
+set wildignore+=node_modules/**                      " locally installed NodeJS modules
 
+set gdefault " When on, the ":substitute" flag 'g' is default on.
 set nosm " don't change to matching braces
 set visualbell " instead of emitting an obnoxious noise, the window will flash very briefly
 set number " show line numbers
@@ -83,9 +94,8 @@ set title " show title in console title bar
 set mousehide " hide the mouse pointer while typing
 set lazyredraw " Speed up macros
 set ttyfast " smoother changes
-" Ignore these files when completing names, in Explorer and in Command-T
-set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,node_modules/**  
 set laststatus=2 " always show status line
+set smarttab " sw at the start of the line, sts everywhere else
 set statusline=
 set statusline+=%2*%-3.3n%0*\                " buffer number
 set statusline+=%f\                          " file name
@@ -107,6 +117,9 @@ set backspace=indent,eol,start   " allow backspacing over everything in insert m
 set nowrap                       " don't wrap lines longer than the screen
 set nostartofline                " don't jump to first character when paging
 set whichwrap=b,s,h,l,<,>,[,]    " move freely between files
+
+set timeoutlen=1200         " A little bit more time for macros
+set ttimeoutlen=50          " Make Esc work faster
 
 " # Search
 set incsearch                    " do incremental searching
@@ -205,7 +218,10 @@ noremap <F2> :<C-U>call Spaces2()<CR>
 noremap <F3> :<C-U>call Spaces4()<CR>
 noremap <F4> :<C-U>call Tabs4()<CR>
 
-call Spaces4()
+" Press Ctrl+h to toggle highlighting on/off.
+noremap <C-h> :set hls!<CR>
+
+iabbrev Lipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 
 " }}}
 
@@ -234,6 +250,49 @@ augroup vimrcEx
 		\   exe "normal g`\"" |
 		\ endif
 augroup END
+
+"augroup settings
+"  autocmd!
+"
+"  " Restore cursor position
+"  autocmd BufReadPost *.rb if line("'\"") > 1 && line("'\"") <= line("$") |
+"      \   exe "normal! g`\"" | endif
+"
+"  autocmd CursorHold,BufWritePost,BufReadPost,BufLeave *
+"        \ if isdirectory(expand("<amatch>:h")) | let &swapfile = &modified | endif
+"
+"  autocmd BufNewFile,BufRead *.scss             set ft=scss.css
+"  autocmd BufNewFile,BufRead *.md               set ft=markdown
+"  autocmd BufNewFile,BufRead *.haml,*.jst       set ft=haml
+"  autocmd BufNewFile,BufRead *.feature,*.story  set ft=cucumber
+"  autocmd BufRead * if ! did_filetype() && getline(1)." ".getline(2).
+"        \ " ".getline(3) =~? '<\%(!DOCTYPE \)\=html\>' | setf html | endif
+"
+"  autocmd FileType javascript,coffee            setlocal et sw=2 sts=2 isk+=$
+"  autocmd FileType html,xhtml,css,scss.css      setlocal et sw=2 sts=2
+"  autocmd FileType eruby,yaml,ruby              setlocal et sw=2 sts=2
+"  autocmd FileType cucumber                     setlocal et sw=2 sts=2
+"  "autocmd FileType cucumber                     inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+"  autocmd FileType gitcommit                    setlocal spell
+"  autocmd FileType ruby                         setlocal comments=:#\  tw=79
+"  autocmd FileType vim                          setlocal et sw=2 sts=2 keywordprg=:help
+"  autocmd FileType python                       setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+"
+"  autocmd Syntax   css  syn sync minlines=50
+"
+"  "autocmd User Rails nnoremap <buffer> <D-r> :<C-U>Rake<CR>
+"  "autocmd User Rails nnoremap <buffer> <D-R> :<C-U>.Rake<CR>
+"  autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
+"  autocmd User Rails Rnavcommand steps features/step_definitions -suffix=_steps.rb -default=web
+"  autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
+"  autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
+"  autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
+"  autocmd User Rails Rnavcommand support spec/support features/support -default=env
+"  autocmd User Rails Rnavcommand sass app/sass -suffix=.scss -default=model()
+"  autocmd User Fugitive command! -bang -bar -buffer -nargs=* Gpr :Git<bang> pull --rebase <args>
+"
+"  autocmd FileType ruby imap <C-l> <Space>=><Space>
+"augroup END
 
 " }}}
 
@@ -277,4 +336,6 @@ augroup END
 " colorscheme inkpot
 
 " }}}
+
+call Spaces4()
 
