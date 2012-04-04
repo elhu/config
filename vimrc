@@ -44,6 +44,19 @@ function! Tabs4()
     set shiftwidth=4
 endfunction
 
+" Fixes the following *feature*:
+"     If you do not type anything on the new line except <BS> or CTRL-D and then
+"     type <Esc> or <CR>, the indent is deleted again
+function! KeepLineIndentation()
+    inoremap <Enter> <Enter><space><bs>
+    nnoremap o o<space><bs>
+    nnoremap O O<space><bs>
+endfunction
+
+function! StripTrailingWhitespace()
+    autocmd BufWritePre * :%s/\s*$//|''
+endfunction
+
 " }}}
 
 " Editor Properties {{{
@@ -62,7 +75,7 @@ set history=100 " keep 100 lines of command line history
 " Auto reloads the current buffer..especially useful while viewing log files and it almost serves the functionality of tail program in unix from within vim.
 " :setlocal autoread
 " Read files when they've been changed outside of Vim.
-" set autoread 
+" set autoread
 
 " # Command line
 set wildmenu " see all options when auto completing with <TAB>
@@ -164,6 +177,15 @@ map <leader>e :edit %%
 " sudo write and quit
 cmap x!! w !sudo tee %<CR><CR>:q!<CR>
 
+" Ack
+nnoremap <leader>a :Ack
+" Rotating among results in an ack search
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>
+
+" map semicolon to colon
+nnoremap ; :
+
 " Command-T
 noremap <Leader>t :CommandT<CR>
 noremap <F5> :CommandTFlush<CR>
@@ -208,12 +230,6 @@ set pastetoggle=<F8> " When pasting from outside vim it turns off auto indentati
 
 " # Indentation
 
-" Fixes the following *feature*:
-"     If you do not type anything on the new line except <BS> or CTRL-D and then
-"     type <Esc> or <CR>, the indent is deleted again
-inoremap <Enter> <Enter><space><bs>
-nnoremap o o<space><bs>
-nnoremap O O<space><bs> 
 " Allow to easily change indentation styles.
 noremap <F2> :<C-U>call Spaces2()<CR>
 noremap <F3> :<C-U>call Spaces4()<CR>
@@ -237,12 +253,12 @@ filetype plugin indent on
 " Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
 	au!
-	
+
 	" For all text files set 'textwidth' to 78 characters.
 	autocmd FileType text setlocal textwidth=78
     autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     "autocmd FileType html setlocal shiftwidth=2 tabstop=2 OR put any settings in ~/.vim/after/ftplugin
-	
+
 	" When editing a file, always jump to the last known cursor position.
 	" Don't do it when the position is invalid or when inside an event handler
 	" (happens when dropping a file on gvim).
@@ -327,7 +343,7 @@ augroup END
 " "*p will paste from the different register
 " :r!cat
 " :map <C-F> /\V
-" :help text-objects 
+" :help text-objects
 " http://www.vimgolf.com/
 " Diff opt
 " set diffopt=vertical

@@ -57,33 +57,24 @@ alias sudoedit='sudo -e'
 
 alias udb='sudo /usr/libexec/locate.updatedb'
 
+# SCREEN SHORTCUTS
+s() {
+    screen -U -c ~/screens/"$@"
+}
+
+v() {
+    if [[ -z `./.vimrc` ]] then
+        vim -S .vimrc
+    else
+        vim
+    fi
+}
+
 alias rt='touch tmp/restart.txt'
 alias rtd='touch tmp/debug.txt; rt'
 
 alias topc='top -o cpu'
 alias topm='top -o vsize'
 
-# Fix for Mac OSX gcc
 export CC=/usr/bin/gcc-4.2
-
-# SCREEN SHORTCUTS
-s() {
-    screen -U -c ~/screens/"$@"
-}
-
-# TODO
-#alias pbcopy='xsel --clipboard --input'
-#alias pbpaste='xsel --clipboard --output'
-#also xclip can be used
-#alias pbcopy='xclip -selection clipboard'
-#alias pbpaste='xclip -selection clipboard -o'
-v() {
-    echo [[ -z ".vimrc" ]]
-    #if [[ -z ".vimrc" ]]; then
-    #    vim -S .vimrc
-    #else
-    #    vim
-    #fi
-}
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
