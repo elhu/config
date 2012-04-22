@@ -22,6 +22,7 @@ alias grr='git remote rm'
 alias gpl='git pull --rebase'
 alias gps='git push'
 alias gcl='git clone'
+alias gsu='git submodule update --init'
 
 # HG ALIASES
 alias ha='hg add'

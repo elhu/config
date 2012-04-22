@@ -93,6 +93,7 @@ set wildignore+=*.sw?                                " Vim swap files
 set wildignore+=*.DS_Store                           " OSX bullshit
 set wildignore+=*.luac                               " Lua byte code
 set wildignore+=node_modules/**                      " locally installed NodeJS modules
+set wildignore+=tmp/**                               " temporary files
 
 set gdefault " When on, the ":substitute" flag 'g' is default on.
 set nosm " don't change to matching braces
