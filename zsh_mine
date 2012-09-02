@@ -1,11 +1,20 @@
+setopt appendhistory autocd extendedglob nomatch notify
+unsetopt beep
+
 # set command line to vi mode
 bindkey -v
+bindkey '\e[3~' delete-char
+bindkey '^R' history-incremental-search-backward
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
 
 # set my default editor to command-line vim
 EDITOR='/usr/local/bin/vim'
 
 # PATH
-export PATH=/Users/adrian/bin:/Users/adrian/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/adrian/.rvm/bin:$PATH
+PATH=$HOME/.rvm/bin:$HOME/bin:$HOME/local/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 
 # GIT ALIASES
 alias ga='git add'
@@ -70,6 +79,15 @@ v() {
         vim
     fi
 }
+
+#rails_app(name, path) {
+#    mkdir -p path
+#    cd path
+#    echo "1.9.3@$name" > .rvmrc
+#    rvm rvmrc trust .
+#    gem install rails
+#    rails new $name .
+#}
 
 alias rt='touch tmp/restart.txt'
 alias rtd='touch tmp/debug.txt; rt'

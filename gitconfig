@@ -20,11 +20,6 @@
     pullff = pull --ff-only
     noff = merge --no-ff
     l = log --graph --abbrev-commit --date=relative 
-    pub = "!f() { git push ${1:-origin} `git symbolic-ref HEAD`; }; f"
-    pul = "!f() { git pull ${1:-origin} `git symbolic-ref HEAD`; }; f"
-    rl = reflog
-    dfc = diff --cached
-    hist = log --oneline --graph --decorate
     la = !git l --all
     div = divergence
     gn = goodness
@@ -39,6 +34,10 @@
     pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 
 [merge]
-    tool = vimdiff
+    tool = vimdiff3
+[mergetool "vimdiff3"]
+    cmd = vim -f -d \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\"
+
 [core]
 	excludesfile = /Users/adrian/.gitignore_global
+    pager = less -eiFRSX

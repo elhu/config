@@ -1,67 +1,35 @@
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/adrian/.zshrc'
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-    rxvt-256color) TERM=rxvt-unicode;;
-esac
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="robbyrussell"
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt appendhistory autocd extendedglob nomatch notify
-unsetopt beep
-bindkey -v
-bindkey '\e[3~' delete-char
-bindkey '^R' history-incremental-search-backward
-# End of lines configured by zsh-newuser-install
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
 
-alias s ack-grep
+# Comment this out to disable weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
 
-PATH=$HOME/local/node/bin:$PATH
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
 
-[[ -s "/home/adrian/.rvm/scripts/rvm" ]] && source "/home/adrian/.rvm/scripts/rvm"
+# Uncomment following line if you want to disable autosetting terminal title.
+DISABLE_AUTO_TITLE="true"
 
-alias ga='git add'
-alias gl='git log'
-alias gs='git status'
-alias gd='git diff'
-alias gm='git commit -m'
-alias gma='git commit -am'
-alias gb='git branch'
-alias gco='git checkout'
-alias gra='git remote add'
-alias grr='git remote rm'
-alias gpl='git pull --rebase'
-alias gps='git push'
-alias gcl='git clone'
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+# COMPLETION_WAITING_DOTS="true"
 
-alias ha='hg add'
-alias hp='hg push'
-alias hl='hg log'
-alias hs='hg status'
-alias hd='hg diff'
-alias hm='hg commit -m'
-alias hma='hg commit -am'
-alias hb='hg branch'
-alias hc='hg checkout'
-alias hra='hg remote add'
-alias hrr='hg remote rm'
-alias hpu='hg pull'
-alias hcl='hg clone'
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git)
 
-alias g='ack'
-alias pkg-search='apt-cache search'
-alias pkg-info='apt-cache showpkg'
-alias pkg-install='sudo apt-get install'
+source $ZSH/oh-my-zsh.sh
 
-alias t='bin/rspec --format nested'
+source $HOME/.zsh_mine
+source $HOME/.zsh_private
 
-s() {
-    screen -c ~/screens/"$@"
-}
 
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

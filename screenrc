@@ -1,5 +1,6 @@
 # http://linux.dsplabs.com.au/files/p13-screen/.screenrc
 startup_message off
+term screen-256color
 
 defscrollback 4096
 

@@ -148,6 +148,8 @@ set nobackup                     " don't make a name~ backup file after saving f
 set updatecount=50               " write swap files to disk after 50 keystrokes
 set sessionoptions+=resize,blank " remember empty files and window sizes between sessions
 
+let html_no_rendering=1
+
 " }}}
 
 " Mappings {{{
@@ -199,9 +201,9 @@ map <leader>gc :CommandT app/controllers<cr>
 map <leader>gm :CommandT app/models<cr>
 map <leader>gh :CommandT app/helpers<cr>
 map <leader>gl :CommandT lib<cr>
-map <leader>gp :CommandT public<cr>
-map <leader>gs :CommandT public/stylesheets<cr>
-map <leader>gj :CommandT public/javascripts<cr>
+map <leader>ga :CommandT app/assets<cr>
+map <leader>gs :CommandT app/assets/stylesheets<cr>
+map <leader>gj :CommandT app/assets/javascripts<cr>
 map <leader>gR :call ShowRoutes()<cr>
 
 " Navigation
@@ -268,6 +270,20 @@ augroup vimrcEx
 		\   exe "normal g`\"" |
 		\ endif
 augroup END
+
+"This will highlight all characters past 74 columns (tweak that number as
+"desired) in dark grey (tweak that color as desired), and is a nice visual cue
+"when auto linewrapping isn't turned on when you should think about breaking
+"things.
+"augroup vimrc_autocmds
+"    autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+"    autocmd BufEnter * match OverLength /\%74v.*/
+"augroup END
+"The value of format-options will drastically change the way Vim behaves, so I
+"highly recommend keeping it displayed some where you can reference it
+"quickly. I use:
+"
+"set statusline=...[%{&fo}]...
 
 "augroup settings
 "  autocmd!
@@ -356,4 +372,9 @@ augroup END
 " }}}
 
 call Spaces4()
-
+"colorscheme zenburn
+"colorscheme inkpot
+"colorscheme wombat
+"colorscheme evening
+"colorscheme jellybeans
+colorscheme molokai

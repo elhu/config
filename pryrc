@@ -2,7 +2,7 @@
 Pry.config.should_load_plugins = false
 Pry.plugins["doc"].activate!
 
-Pry.config.hooks.add_hook(:after_session, :say_bye) { puts "Pry has ended." }
+#Pry.config.hooks.add_hook(:after_session, :say_bye) { puts "Pry has ended." }
 
 Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
 
@@ -74,20 +74,8 @@ if Object.const_defined?('Mongoid')
   Mongoid.logger = Logger.new(STDOUT)
 end
 
-# TODO
-# How do I add to all models automatically - ie. extend Mongoid::Document
-# ? Identity.f("twitter|gheorghe") will find identities with my either gheorghe or twitter
-# ? Identity.f("twitter&gheorghe") will find my twitter identity
-# Can be used as: class Model; extend DevHelpers; end  
-module DevHelpers
-  def f(needle)
-    searches = self.fields.keys.map { |field| Hash[field, needle] }
-    self.any_of(*searches)
-  end
-end
-
 begin
-  require "pryrc_project.rb"
+  require "./.pryrc.rb"
 rescue LoadError
   p "No custom pryrc file loaded for the project"
 end
