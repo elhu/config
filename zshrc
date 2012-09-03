@@ -6,6 +6,7 @@ alias gl='git log'
 alias gs='git status'
 alias gsw='git show'
 alias gd='git diff'
+alias gdc='git diff --cached'
 alias gm='git commit -m'
 alias gma='git commit -am'
 alias gb='git branch'
@@ -100,7 +101,7 @@ zstyle ':omz:load' omodule \
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':omz:module:prompt' theme 'oliver'
+zstyle ':omz:module:prompt' theme 'minimal'
 
 # This will make you shout: OH MY ZSHELL!
 source "$OMZ/init.zsh"
@@ -112,6 +113,6 @@ unsetopt BEEP HIST_BEEP LIST_BEEP
 bindkey '^R' history-incremental-search-backward
 
 # Stuff required only for this machine
-if [[ -f .zmachine ]]; then
-  source .zmachine
+if [[ -f ~/.zmachine ]]; then
+  source ~/.zmachine
 fi
