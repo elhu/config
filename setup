@@ -1,6 +1,6 @@
 #!/bin/zsh
 
 # ZSH
-for rcfile in $0:h/{zlogin,zlogout,zprofile,zshrc,zshenv}; do
+for rcfile in $0:h/{zpreztorc,zshenv}; do
   cp -f $rcfile ~/.$rcfile:t
 done
